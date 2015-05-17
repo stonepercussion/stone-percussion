@@ -326,7 +326,15 @@
                       </a>
                     </li>
                   {% endif %}
-                </ul>
+                  {% if settings.social_instagram_link != blank %}
+                    <li>
+                      <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ shop.name }} on Instagram">
+                        <span class="icon icon-instagram" aria-hidden="true"></span>
+                        <span class="fallback-text">Instagram</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                 </ul>
             </div>
           {% endif %}
           {% if settings.footer_newsletter_enable %}
