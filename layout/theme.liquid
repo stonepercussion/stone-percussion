@@ -161,9 +161,9 @@
               Site name gets precedence with H1 tag on homepage, div on other pages.
             {% endcomment %}
             {% if template == 'index' %}
-              <h1 class="site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+              <h1 class="site-header__logo large--center" itemscope itemtype="http://schema.org/Organization">
             {% else %}
-              <div class="h1 site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+              <div class="h1 site-header__logo large--center" itemscope itemtype="http://schema.org/Organization">
             {% endif %}
 		<a href="/" itemprop="url" class="site-header__logo-link">
                   <img src="{{ 'Stone-Percussion.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
