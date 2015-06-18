@@ -6,9 +6,9 @@
 <ul class="no-bullets">
   {% for article in blogs[blog.handle].articles limit:6 %}
     <li>
-      <a href="{{ article.url }}">{{ article.title }}</a>
+      <a style="font-weight:bold" href="{{ article.url }}">{{ article.title }}</a>
       <br>
-      <time style="font-weight: bold" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
     </li>
   {% endfor %}
 </ul>
