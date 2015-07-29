@@ -123,14 +123,14 @@
             {{ 'layout.customer.log_out' | t | customer_logout_link }}
           </li>
         {% else %}
-          <li class="mobile-nav__item">
-            {{ 'layout.customer.log_in' | t | customer_login_link }}
-          </li>
-          {% if shop.customer_accounts_optional %}
+         {% if shop.customer_accounts_optional %}
           <li class="mobile-nav__item">
             {{ 'layout.customer.create_account' | t | customer_register_link }}
           </li>
-          {% endif %}
+           {% endif %}
+          <li class="mobile-nav__item">
+            {{ 'layout.customer.log_in' | t | customer_login_link }}
+          </li>
         {% endif %}
       {% endif %}
     </ul>
