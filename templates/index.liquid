@@ -42,7 +42,9 @@
             <div class="grid__item large--four-fifths large--display-table-cell medium--two-thirds">
               <div class="grid">
                 <div class="grid__item large--three-quarters medium--two-thirds">
-                  <p class="h6">{{ product.title }}</p>
+                  <a href="{{ product.url | within: collection }}">
+                      <p class="h6">{{ product.title }}</p>
+                  </a>
                   <div class="rte">
                     <p>{{ product.content | strip_html | truncatewords: 30 }}</p>
                   </div>
