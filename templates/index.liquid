@@ -54,15 +54,14 @@ removing collection header
     For onboarding new users to your theme, we add some default collections and onboarding tutorials to help populate their store
   {% endcomment %}
 
-  {% if isEmpty %}
-    {% unless emptyState %}
-      {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
-      {% assign emptyState = true %}
-    {% endunless %}
+</div>
 
-    {% include 'onboarding-featured-collections' %}
-  {% endif %}
-
+<div class="grid text-center">
+    <div class="grid__item text-center">
+          <a href="store.stonepercussion.com/products/stone-x-001" title="Stone X" class="grid__image">
+          </a>
+          <p><a href="store.stonepercussion.com/products/stone-x-001" title="Stone X" class="grid__image">Stone X</a></p>
+    </div>
 </div>
 
 <hr>
