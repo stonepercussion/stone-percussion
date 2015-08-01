@@ -45,9 +45,11 @@
                   <a href="{{ product.url | within: collection }}">
                       <p class="h6">{{ product.title }}</p>
                   </a>
-                  <div class="rte">
-                    <p>{{ product.content | strip_html | truncatewords: 30 }}</p>
-                  </div>
+                  <a href="{{ product.url | within: collection }}">
+                    <div class="rte">
+                       <p>{{ product.content | strip_html | truncatewords: 30 }}</p>
+                    </div>
+                  </a>
                 </div>
                 <div class="grid__item large--one-quarter medium--one-third">
                   {% comment %}
