@@ -70,7 +70,7 @@
                       {{ 'products.general.from_text_html' | t: price: price }}
                     {% else %}
                       <a href="{{ product.url | within: collection }}">
-                          {{ product.price | money }}
+                          {{ product.price | money | remove: '.00' }}
                       </a>
                     {% endif %}
                   {% endif %}
