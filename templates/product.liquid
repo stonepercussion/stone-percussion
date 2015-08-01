@@ -91,7 +91,7 @@
           </select>
 
           <span id="ProductPrice" class="h2" itemprop="price">
-            {{ current_variant.price | money }}
+            {{ current_variant.price | money | remove: '.00' }}
           </span>
 
           {% if product.compare_at_price_max > product.price %}
