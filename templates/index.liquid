@@ -7,13 +7,7 @@
 </div>
 
 <hr>
-
-{% comment %}
-removing collection header
-<h2>{{ 'homepage.sections.featured_title' | t }}</h2>
-{% endcomment %}
 <div class="grid text-center">
-
   {% comment %}
     Show five collections, unless it's 'frontpage'.
 
@@ -56,13 +50,75 @@ removing collection header
 
 </div>
 
-<div class="grid text-center">
-    <div class="grid__item text-center">
-          <a href="store.stonepercussion.com/products/stone-x-001" title="Stone X" class="grid__image">
-          </a>
-          <p><a href="store.stonepercussion.com/products/stone-x-001" title="Stone X" class="grid__image">Stone X</a></p>
-    </div>
-</div>
+<div class="grid-uniform">
+      <!-- begin product list output -->
+  {% for collection in collections %}
+      {% for product in collection.products %}
+        {% comment %}
+          Check if the product is on sale and set a variable to be used below.
+        {% endcomment %}
+        {% assign on_sale = false %}
+        {% if product.compare_at_price > product.price %}
+          {% assign on_sale = true %}
+        {% endif %}
+
+        {% comment %}
+          Check if the product is sold out and set a variable to be used below.
+        {% endcomment %}
+        {% assign sold_out = true %}
+        {% if product.available %}
+          {% assign sold_out = false %}
+        {% endif %}
+
+        <div class="grid__item">
+          <div class="grid large--display-table">
+            <div class="grid__item large--one-fifth large--display-table-cell medium--one-third">
+              <a href="{{ product.url | within: collection }}">
+                <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.featured_image.alt | escape }}" class="grid__image">
+              </a>
+            </div>
+            <div class="grid__item large--four-fifths large--display-table-cell medium--two-thirds">
+              <div class="grid">
+                <div class="grid__item large--three-quarters medium--two-thirds">
+                  <p class="h6">{{ product.title }}</p>
+                  <div class="rte">
+                    <p>{{ product.content | strip_html | truncatewords: 30 }}</p>
+                  </div>
+                </div>
+                <div class="grid__item large--one-quarter medium--one-third">
+                  {% comment %}
+                    You can show a leading 'from' or 'up to' by checking 'product.price_varies'
+                    if your variants have different prices.
+                  {% endcomment %}
+                  {% if on_sale %}
+                    {% if product.price_varies %}
+                      {% assign sale_price = product.price | money %}
+                      {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+                    {% else %}
+                      <strong>{{ 'products.product.on_sale' | t }}</strong>
+                      {{ product.price | money }}
+                    {% endif %}
+                  {% else %}
+                    {% if product.price_varies %}
+                      {% assign price = product.price | money %}
+                      {{ 'products.general.from_text_html' | t: price: price }}
+                    {% else %}
+                      {{ product.price | money }}
+                    {% endif %}
+                  {% endif %}
+                  {% if sold_out %}
+                    <br><strong>{{ 'products.product.sold_out' | t }}</strong>
+                  {% endif %}
+                  {% if on_sale %}
+                    <br><s>{{ product.compare_at_price | money }}</s>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+{% endfor %}
 
 <hr>
 <blockquote>
