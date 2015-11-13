@@ -33,13 +33,18 @@
       {% endcomment %}
       {% if product.images.size > 1 %}
         <ul class="product-single__thumbnails grid-uniform" id="ProductThumbs">
-
+          {% assign counter = 0 %}
           {% for image in product.images %}
-            <li class="grid__item one-quarter">
-              <a href="{{ image.src | img_url: 'large' }}" class="product-single__thumbnail">
-                <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-              </a>
-            </li>
+            {% assign counter = counter+1 %}
+            {% if counter >= 4 %}
+              {% break %}
+            {% else %}
+                <li class="grid__item one-quarter">
+                  <a href="{{ image.src | img_url: 'large' }}" class="product-single__thumbnail">
+                    <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+                  </a>
+                </li>
+            {% endif %}
           {% endfor %}
 
         </ul>
