@@ -34,7 +34,8 @@
       {% if product.images.size > 1 %}
         <ul class="product-single__thumbnails grid-uniform" id="ProductThumbs">
           {% for image in product.images %}
-            {% if increment counter >= 5 %}
+            {% increment counter %}
+            {% if counter >= 5 %}
               {% break %}
             {% else %}
                 <li class="grid__item one-quarter">
