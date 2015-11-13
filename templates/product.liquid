@@ -33,9 +33,8 @@
       {% endcomment %}
       {% if product.images.size > 1 %}
         <ul class="product-single__thumbnails grid-uniform" id="ProductThumbs">
-          {% assign counter = 0 %}
           {% for image in product.images %}
-            {% assign counter = counter+1 %}
+            {% increment counter %}
             {% if counter >= 4 %}
               {% break %}
             {% else %}
