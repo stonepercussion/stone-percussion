@@ -36,7 +36,7 @@
                   </a>
                   <a href="{{ product.url | within: collection }}">
                     <div class="rte">
-                       <p>{{ product.content | strip_html | strip_newlines | remove:'*Monogram customers: please write your initials on the "Special instructions for seller" section*' | remove:'Custom orders are final and we do not accept returns.' | truncatewords: 31 }}</p>
+                       <p>{{ product.content | strip_html | remove:'*Monogram customers: please write your initials on the "Special instructions for seller" section*' | remove:'Custom orders are final and we do not accept returns.' | truncatewords: 31 }}</p>
                     </div>
                   </a>
                 </div>
