@@ -61,10 +61,6 @@
                       <a href="{{ product.url | within: collection }}">
                           {{ product.price | money | remove: '.00' }}
                       </a>
-                      <br><br>
-                      <a href="{{ product.url | within: collection }}">
-                        <img src="{{ 'byo.png' | asset_url }}" alt="Build Your Own" class="grid__image">
-                      </a>
                     {% endif %}
                   {% endif %}
                   {% if sold_out %}
@@ -73,10 +69,11 @@
                   {% if on_sale %}
                     <br><s>{{ product.compare_at_price | money }}</s>
                   {% endif %}
-                  <br><br>
+                  <br>
                       <a href="{{ product.url | within: collection }}">
                         <img src="{{ 'byo.png' | asset_url }}" alt="Build Your Own" class="grid__image">
                       </a>
+                  <br> 
                 </div>
               </div>
             </div>
