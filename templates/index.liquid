@@ -61,6 +61,10 @@
                       <a href="{{ product.url | within: collection }}">
                           {{ product.price | money | remove: '.00' }}
                       </a>
+                      <br><br>
+                      <a href="{{ product.url | within: collection }}">
+                        <img src="{{ 'byo.png' | asset_url }}" alt="Build Your Own" class="grid__image">
+                      </a>
                     {% endif %}
                   {% endif %}
                   {% if sold_out %}
@@ -74,7 +78,6 @@
             </div>
           </div>
         </div>
-        <br><br>
         <hr>
     {% endfor %}
 {% endfor %}
@@ -86,7 +89,7 @@
 </blockquote>
 <br>
 <blockquote>
-    The StoneX mallets feel unlike anything else I've ever played. The sound quality is superb throughout the entire range of the instrument.
+    The Stone X mallets feel unlike anything else I've ever played. The sound quality is superb throughout the entire range of the instrument.
     <cite>Kyle Ritenauer, Principal Percussionist of The Hudson Valley Philharmonic</cite>
 </blockquote>
 
