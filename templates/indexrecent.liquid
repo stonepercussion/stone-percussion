@@ -1,0 +1,129 @@
+<!-- /templates/index.liquid -->
+
+<hr>
+<div class="grid-uniform">
+      <!-- begin product list output -->
+  {% for collection in collections %}
+      {% for product in collection.products %}
+        {% comment %}
+          Check if the product is on sale and set a variable to be used below.
+        {% endcomment %}
+        {% assign on_sale = false %}
+        {% if product.compare_at_price > product.price %}
+          {% assign on_sale = true %}
+        {% endif %}
+
+        {% comment %}
+          Check if the product is sold out and set a variable to be used below.
+        {% endcomment %}
+        {% assign sold_out = true %}
+        {% if product.available %}
+          {% assign sold_out = false %}
+        {% endif %}
+
+        <div class="grid__item">
+          <div class="grid large--display-table">
+            <div class="grid__item large--one-fifth large--display-table-cell medium--one-third">
+              <a href="{{ product.url | within: collection }}">
+                <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.featured_image.alt | escape }}" class="grid__image">
+              </a>
+            </div>
+            <div class="grid__item large--four-fifths large--display-table-cell medium--two-thirds">
+              <div class="grid">
+                <div class="grid__item large--three-quarters medium--two-thirds">
+                  <a href="{{ product.url | within: collection }}">
+                      <p class="h6">{{ product.title }}</p>
+                  </a>
+                  <a href="{{ product.url | within: collection }}">
+                    <div class="rte">
+                       <p>{{ product.content | strip_html | remove:'*Monogram customers: please write your initials on the "Special instructions for seller" section*' | remove:'Custom orders are final and we do not accept returns.' | truncatewords: 31 }}</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="grid__item large--one-quarter medium--one-third">
+                  {% comment %}
+                    You can show a leading 'from' or 'up to' by checking 'product.price_varies'
+                    if your variants have different prices.
+                  {% endcomment %}
+                  {% if on_sale %}
+                    {% if product.price_varies %}
+                      {% assign sale_price = product.price | money %}
+                      {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+                    {% else %}
+                      <strong>{{ 'products.product.on_sale' | t }}</strong>
+                      {{ product.price | money }}
+                    {% endif %}
+                  {% else %}
+                    {% if product.price_varies %}
+                      {% assign price = product.price | money %}
+                      {{ 'products.general.from_text_html' | t: price: price }}
+                    {% else %}
+                      <a href="{{ product.url | within: collection }}">
+                          {{ product.price | money | remove: '.00' }}
+                      </a>
+                    {% endif %}
+                  {% endif %}
+                  {% if sold_out %}
+                    <br><strong>{{ 'products.product.sold_out' | t }}</strong>
+                  {% endif %}
+                  {% if on_sale %}
+                    <br><s>{{ product.compare_at_price | money }}</s>
+                  {% endif %}
+                  <br><br>
+                      <a href="{{ product.url | within: collection }}">
+                        <img src="{{ 'byo.png' | asset_url }}" alt="Build Your Own" class="grid__image">
+                      </a>
+                  <br> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+    {% endfor %}
+{% endfor %}
+</div>
+<br>
+<blockquote>
+    These mallets are a completely new and unique addition to any professional player's mallet collection.
+<cite>George Nickson, Principal Percussionist of the Sarasota Orchestra</cite>
+</blockquote>
+<br>
+<blockquote>
+    The Stone X mallets feel unlike anything else I've ever played. The sound quality is superb throughout the entire range of the instrument.
+    <cite>Kyle Ritenauer, Principal Percussionist of The Hudson Valley Philharmonic</cite>
+</blockquote>
+
+
+<style>
+    blockquote {
+        font-family: Georgia, serif;
+        font-size: 18px;
+        font-style: italic;
+        margin: 0.25em 0;
+        padding: 0.25em 40px;
+        line-height: 1.45;
+        position: relative;
+        color: #383838;
+        border-left:none;
+    }
+    blockquote:before {
+        display: block;
+        content: "\201C";
+        font-size: 80px;
+        position: absolute;
+        left: -20px;
+        top: -20px;
+        color: #7a7a7a;
+    }
+    blockquote cite {
+        color: #999999;
+        font-size: 14px;
+        display: block;
+        margin-top: 5px;
+    }
+     
+    blockquote cite:before {
+        content: "\2014 \2009";
+    }
+</style>

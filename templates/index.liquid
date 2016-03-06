@@ -1,87 +1,50 @@
 <!-- /templates/index.liquid -->
 
 <hr>
-<div class="grid-uniform">
-      <!-- begin product list output -->
-  {% for collection in collections %}
-      {% for product in collection.products %}
-        {% comment %}
-          Check if the product is on sale and set a variable to be used below.
-        {% endcomment %}
-        {% assign on_sale = false %}
-        {% if product.compare_at_price > product.price %}
-          {% assign on_sale = true %}
-        {% endif %}
+<div class="grid text-center">
 
-        {% comment %}
-          Check if the product is sold out and set a variable to be used below.
-        {% endcomment %}
-        {% assign sold_out = true %}
-        {% if product.available %}
-          {% assign sold_out = false %}
-        {% endif %}
+  {% comment %}
+    Show five collections, unless it's 'frontpage'.
 
-        <div class="grid__item">
-          <div class="grid large--display-table">
-            <div class="grid__item large--one-fifth large--display-table-cell medium--one-third">
-              <a href="{{ product.url | within: collection }}">
-                <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.featured_image.alt | escape }}" class="grid__image">
-              </a>
-            </div>
-            <div class="grid__item large--four-fifths large--display-table-cell medium--two-thirds">
-              <div class="grid">
-                <div class="grid__item large--three-quarters medium--two-thirds">
-                  <a href="{{ product.url | within: collection }}">
-                      <p class="h6">{{ product.title }}</p>
-                  </a>
-                  <a href="{{ product.url | within: collection }}">
-                    <div class="rte">
-                       <p>{{ product.content | strip_html | remove:'*Monogram customers: please write your initials on the "Special instructions for seller" section*' | remove:'Custom orders are final and we do not accept returns.' | truncatewords: 31 }}</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="grid__item large--one-quarter medium--one-third">
-                  {% comment %}
-                    You can show a leading 'from' or 'up to' by checking 'product.price_varies'
-                    if your variants have different prices.
-                  {% endcomment %}
-                  {% if on_sale %}
-                    {% if product.price_varies %}
-                      {% assign sale_price = product.price | money %}
-                      {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
-                    {% else %}
-                      <strong>{{ 'products.product.on_sale' | t }}</strong>
-                      {{ product.price | money }}
-                    {% endif %}
-                  {% else %}
-                    {% if product.price_varies %}
-                      {% assign price = product.price | money %}
-                      {{ 'products.general.from_text_html' | t: price: price }}
-                    {% else %}
-                      <a href="{{ product.url | within: collection }}">
-                          {{ product.price | money | remove: '.00' }}
-                      </a>
-                    {% endif %}
-                  {% endif %}
-                  {% if sold_out %}
-                    <br><strong>{{ 'products.product.sold_out' | t }}</strong>
-                  {% endif %}
-                  {% if on_sale %}
-                    <br><s>{{ product.compare_at_price | money }}</s>
-                  {% endif %}
-                  <br><br>
-                      <a href="{{ product.url | within: collection }}">
-                        <img src="{{ 'byo.png' | asset_url }}" alt="Build Your Own" class="grid__image">
-                      </a>
-                  <br> 
-                </div>
-              </div>
-            </div>
-          </div>
+    Use an index variable in combination to the limit filter
+    to account for the frontpage collection being in top six returned.
+
+    Use variable isEmpty to check if no collections will be shown.
+    For empty store demo only.
+  {% endcomment %}
+  {% assign index = 1 %}
+  {% assign isEmpty = true %}
+
+  {% for collection in collections limit:6 %}
+    {% unless index > 5 %}
+
+      {% unless collection.handle == 'frontpage' %}
+        {% assign isEmpty = false %}
+        {% assign collection_item_width = 'large--one-half medium--one-half' %}
+        <div class="grid__item text-center">
+          {% comment %}
+            Use capture to put the collection title in a variable that is used in liquid filters
+          {% endcomment %}
+          {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+
+          <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" class="grid__image">
+            {% if collection.image %}
+              {{ collection.image.src | img_url: 'large' | img_tag: collection_title }}
+            {% else %}
+              {{ collection.products.first.featured_image | img_url: 'large' | img_tag: collection_title }}
+            {% endif %}
+          </a>
+
+          <p>
+            <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}">{{ collection.title }}</a><br>
+            {{ 'collections.general.items_with_count' | t: count: collection.all_products_count }}
+          </p>
         </div>
-        <hr>
-    {% endfor %}
-{% endfor %}
+        {% assign index = index | plus: 1 %}
+      {% endunless %}
+
+    {% endunless %}
+  {% endfor %}
 </div>
 <br>
 <blockquote>
