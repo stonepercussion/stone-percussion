@@ -129,11 +129,19 @@
                   {% if on_sale %}
                     <br><s>{{ product.compare_at_price | money }}</s>
                   {% endif %}
+                  {% if collection.title contains "Customs" %}
                   <br><br>
                       <a href="{{ product.url | within: collection }}">
                         <img src="{{ 'byo.png' | asset_url }}" alt="Build Your Own" class="grid__image">
                       </a>
                   <br> 
+                  {% else %}
+                  <br><br>
+                      <a href="{{ product.url | within: collection }}">
+                        <img src="{{ 'buy.png' | asset_url }}" alt="Buy Now" class="grid__image">
+                      </a>
+                  <br> 
+                  {% endif %}
                 </div>
               </div>
             </div>
